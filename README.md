@@ -89,6 +89,50 @@ nginx -t                  [verify server is okay]
 service nginx restart     [restart the server]
 ```
 
+### Add Domain to Digital Ocean
+```
+Digital Ocean > Networking > Add Domain
+Add an A record for @ and www to appropriate droplet
+```
+
+### Register Nameservers with Namecheap
+```
+Namecheap > Manage (right of domain) > Nameservers > Custom DNS
+Add the following nameservers
+    ns1.digitalocean.com
+    ns2.digitalocean.com
+    ns3.digitalocean.com
+```
+
+### Add SSL with LetsEncrypt
+https://certbot.eff.org/
+```
+apt install snapd
+sudo snap install core
+sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot --nginx
+```
+
+### Verify certbot timer and service installed (optional)
+```
+ls /etc/systemd/system/snap.certbot.renew.*     
+nano /etc/systemd/system/snap.certbot.renew.timer
+nano /etc/systemd/system/snap.certbot.renew.service
+```
+
+### Update site manually from GitHub
+```
+cd apps/node-app          [insde VPS]
+git pull https://github.com/user/app-name.git
+pm2 restart app.js        [restart pm2 for updates]
+```
+
+### CI/CD via GitHub Actions
+```
+Coming soon...
+```
 
 
 
